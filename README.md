@@ -13,15 +13,15 @@ npm install    # first time only
 npm run dev    # starts server at localhost:4321
 ```
 
-## Routing
+## Structure
 
-Astro uses file-based routing. Each `.astro` file in `src/pages/` becomes a URL:
+Each feature lives in its own folder with a prototype and summary doc:
 
 ```
 src/pages/
-  index.astro        → localhost:4321/
-  dashboard.astro    → localhost:4321/dashboard
-  onboarding.astro   → localhost:4321/onboarding
+  feature-name/
+    index.astro    → localhost:4321/feature-name
+    readme.md      → summary for future viewers
 ```
 
 ## Portability

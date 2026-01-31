@@ -10,32 +10,43 @@ Use this skill when the user asks to prototype, mock up, or quickly explore a UI
 - Each prototype is throwaway — optimize for speed, not maintainability
 - Use modern CSS (grid, flexbox, custom properties)
 - Google Fonts via CDN is acceptable
-- Keep it self-contained: one file, can open directly in browser if astro frontmatter was removed.
-- Use the page name for the astro file as the page title in the <title> tag
-
-## Stack
-
-- Astro (vanilla, no frameworks)
-- Plain HTML/CSS/JS only
-- Deployable to Netlify
+- Keep it self-contained: one file, can open directly in browser if astro frontmatter was removed
+- Use the feature name as the page title in the `<title>` tag
 
 ## Structure
 
-Each prototype is a single monolithic `.astro` file in `src/pages/`.
-The filename becomes the URL path.
+Each feature lives in its own folder under `src/pages/`:
+
+```
+src/pages/
+  feature-name/
+    index.astro    # the prototype
+    readme.md      # summary doc
+```
+
+The folder name becomes the URL path (e.g. `localhost:4321/feature-name`).
+
+## Documentation
+
+After significant changes to a feature, update its `readme.md` with a short summary:
+- What the feature does
+- Key interactions or states
+- Any assumptions made
+
+Keep it brief — this is for future viewers to quickly understand the prototype.
 
 ## Creating a new prototype
 
-1. Create `src/pages/prototype-name.astro`
-2. Write all HTML, CSS, and JS inline in that single file
-3. Run `npm run dev` to preview at `localhost:4321/prototype-name`
+1. Create folder `src/pages/feature-name/`
+2. Add `index.astro` with all HTML, CSS, and JS inline
+3. Add `readme.md` with a brief summary
+4. Run `npm run dev` to preview at `localhost:4321/feature-name`
 
 ## Example prototype structure
 
 ```astro
 ---
-// Any server-side logic here (optional)
-const title = "My Prototype"
+const title = "Feature Name"
 ---
 
 <html lang="en">
