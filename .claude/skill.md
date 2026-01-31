@@ -11,6 +11,7 @@ Use this skill when the user asks to prototype, mock up, or quickly explore a UI
 - Use modern CSS (grid, flexbox, custom properties)
 - Google Fonts via CDN is acceptable
 - Keep it self-contained: one file, can open directly in browser if astro frontmatter was removed.
+- Use the page name for the astro file as the page title in the <title> tag
 
 ## Stack
 

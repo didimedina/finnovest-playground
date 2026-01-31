@@ -4,7 +4,7 @@ A collection of throwaway prototypes and experiments for Finnovest, built with C
 
 ## How it works
 
-This playground is designed to be used with Claude Code. The `skill.md` file contains instructions that Claude follows to generate prototypes. You describe what you want, Claude builds it as a single `.astro` file.
+This playground is designed to be used with Claude Code. The `.claude/skill.md` file contains instructions that Claude follows to generate prototypes. You describe what you want, Claude builds it as a single `.astro` file.
 
 ## Running the project
 
