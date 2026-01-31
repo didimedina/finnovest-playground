@@ -1,0 +1,32 @@
+---
+const prototypes: string[] = []
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Prototypes</title>
+</head>
+<body>
+  <main>
+    <h1>Prototypes</h1>
+    {prototypes.length === 0 ? (
+      <p>No prototypes yet. Create a new .astro file in src/pages/</p>
+    ) : (
+      <ul>
+        {prototypes.map(p => <li><a href={`/${p}`}>{p}</a></li>)}
+      </ul>
+    )}
+  </main>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; padding: 2rem; }
+    h1 { margin-bottom: 1rem; }
+    ul { list-style: none; }
+    li { margin: 0.5rem 0; }
+    a { color: #0066cc; }
+  </style>
+</body>
+</html>
