@@ -1,32 +1,32 @@
 # Finnovest Playground
 
-A collection of throwaway prototypes and experiments for Finnovest.
+A collection of throwaway prototypes and experiments for Finnovest, built with Claude Code.
 
-## Structure
+## How it works
 
-Each prototype lives as a single `.astro` file in `src/pages/`. The filename becomes the URL path.
+This playground is designed to be used with Claude Code. The `skill.md` file contains instructions that Claude follows to generate prototypes. You describe what you want, Claude builds it as a single `.astro` file.
+
+## Running the project
+
+```sh
+npm install    # first time only
+npm run dev    # starts server at localhost:4321
+```
+
+## Routing
+
+Astro uses file-based routing. Each `.astro` file in `src/pages/` becomes a URL:
 
 ```
 src/pages/
-  index.astro        → /
-  dashboard.astro    → /dashboard
-  onboarding.astro   → /onboarding
+  index.astro        → localhost:4321/
+  dashboard.astro    → localhost:4321/dashboard
+  onboarding.astro   → localhost:4321/onboarding
 ```
 
-## Creating a prototype
+## Portability
 
-1. Create a new file in `src/pages/`, e.g. `my-idea.astro`
-2. Write all HTML, CSS, and JS inline in that file
-3. Run `npm run dev` to preview at `localhost:4321/my-idea`
-
-## Commands
-
-| Command           | Action                              |
-| :---------------- | :---------------------------------- |
-| `npm install`     | Install dependencies                |
-| `npm run dev`     | Start dev server at localhost:4321  |
-| `npm run build`   | Build for production                |
-| `npm run preview` | Preview production build            |
+The content of any `.astro` file (everything below the `---` frontmatter) is just HTML with `<style>` and `<script>` tags. You can copy-paste it directly into any browser's dev tools or an HTML file and it will work standalone.
 
 ## Deployment
 
