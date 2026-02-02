@@ -191,8 +191,8 @@ import Config from '../../layouts/Config.astro';
     </div>
   </div>
 
-  <!-- Curtain layer (on top, draggable) -->
-  <div class="curtain" id="curtain">
+  <!-- Peek header (fixed, always visible) -->
+  <div class="peek-header" id="peekHeader">
     <!-- Top bar -->
     <div class="top-bar">
       <div class="firm-logo"></div>
@@ -209,7 +209,10 @@ import Config from '../../layouts/Config.astro';
     <div class="drag-handle" id="dragHandle">
       <div class="handle-bar"></div>
     </div>
+  </div>
 
+  <!-- Curtain content (draggable, slides to reveal hub) -->
+  <div class="curtain" id="curtain">
     <!-- Scrollable content -->
     <div class="curtain-content">
       <!-- Portfolio value -->
@@ -300,19 +303,31 @@ import Config from '../../layouts/Config.astro';
     background: #000;
     display: flex;
     flex-direction: column;
-    padding-top: 60px;
+    padding-top: 130px; /* Below peek header */
     z-index: 1;
+  }
+
+  .peek-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--base-11);
+    z-index: 3;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   }
 
   .curtain {
     position: absolute;
-    inset: 0;
+    top: 120px; /* Below peek header */
+    left: 0;
+    right: 0;
+    height: calc(100% - 120px);
     background: var(--base-11);
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     z-index: 2;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
     will-change: transform;
   }
 
@@ -781,12 +796,10 @@ import Config from '../../layouts/Config.astro';
 
     const curtain = document.getElementById('curtain');
     const handle = document.getElementById('dragHandle');
-    const screenHeight = 822; // iPhone screen height minus some padding
-    const peekHeight = 100;   // Height of collapsed header
-    const maxY = screenHeight - peekHeight;
+    const contentHeight = 700; // How far up to slide when open (reveals hub)
+    const openY = -contentHeight; // Negative = slid UP
 
     let isOpen = false;
-    let startY = 0;
     let lastY = 0;
     let lastTime = 0;
     let velocity = 0;
@@ -797,10 +810,9 @@ import Config from '../../layouts/Config.astro';
     // Create draggable instance
     const draggable = Draggable.create(curtain, {
       type: 'y',
-      bounds: { minY: 0, maxY: maxY },
+      bounds: { minY: openY, maxY: 0 }, // 0 = closed, openY = open (slid up)
       onDragStart: function() {
         gsap.killTweensOf(curtain);
-        startY = this.y;
         lastY = this.y;
         lastTime = Date.now();
         velocity = 0;
@@ -820,15 +832,16 @@ import Config from '../../layouts/Config.astro';
         let targetY;
 
         // Use velocity to determine snap direction
+        // Negative velocity = dragging UP = open
+        // Positive velocity = dragging DOWN = close
         if (Math.abs(velocity) > 0.5) {
-          // Fast swipe - go in direction of velocity
-          targetY = velocity > 0 ? maxY : 0;
+          targetY = velocity < 0 ? openY : 0;
         } else {
           // Slow drag - snap to nearest
-          targetY = currentY > maxY / 2 ? maxY : 0;
+          targetY = currentY < openY / 2 ? openY : 0;
         }
 
-        isOpen = targetY === maxY;
+        isOpen = targetY === openY;
 
         gsap.to(curtain, {
           y: targetY,
@@ -845,7 +858,7 @@ import Config from '../../layouts/Config.astro';
 
       isOpen = !isOpen;
       gsap.to(curtain, {
-        y: isOpen ? maxY : 0,
+        y: isOpen ? openY : 0,
         duration: 0.5,
         ease: 'power3.out'
       });
