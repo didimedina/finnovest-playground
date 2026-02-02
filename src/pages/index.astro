@@ -1,5 +1,13 @@
 ---
-const prototypes: string[] = []
+import fs from 'node:fs';
+import path from 'node:path';
+
+const pagesDir = path.dirname(import.meta.url.replace('file://', ''));
+const entries = fs.readdirSync(pagesDir, { withFileTypes: true });
+const prototypes = entries
+  .filter(e => e.isDirectory())
+  .map(e => e.name)
+  .sort();
 ---
 
 <html lang="en">
