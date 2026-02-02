@@ -1,0 +1,1758 @@
+---
+import PhoneLayout from '../../layouts/PhoneLayout.astro';
+---
+
+<PhoneLayout title="Finnovest | Home">
+  <!-- Back Layer - Nav peeks from behind -->
+  <div class="back-layer">
+    <div class="nav-left">
+      <div class="nav-item active">
+        <div class="nav-circle"></div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-square"></div>
+      </div>
+    </div>
+    <div class="swipe-indicator"></div>
+    <div class="nav-right">
+      <div class="nav-item">
+        <div class="nav-triangle"></div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-diamond"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expanded card container -->
+  <div class="expanded-card-container" id="expandedCardContainer"></div>
+
+  <!-- Front Layer - Curtain -->
+  <div class="curtain">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="firm-logo"></div>
+      <div class="portfolio-selector">
+        <span class="portfolio-selector-text">Main Portfolio</span>
+        <svg class="portfolio-selector-icon" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="user-avatar"></div>
+    </div>
+
+    <!-- Scrollable Content -->
+    <div class="scroll-content">
+
+      <!-- Recommendations Section -->
+      <p class="section-label">Pending approval</p>
+
+      <!-- Stacked Cards -->
+      <div class="card-stack" id="cardStack">
+        <!-- Buy Card -->
+        <div class="card" data-index="0" data-type="buy">
+          <div class="card-minimized">
+            <div class="goal-badge buy">Buy</div>
+
+            <div class="ticker-row">
+              <div class="ticker-left">
+                <div class="ticker-logo nvda"></div>
+                <span class="ticker-symbol">NVDA</span>
+              </div>
+              <span class="trade-amount">$14,280</span>
+            </div>
+
+            <div class="info-row">
+              <span class="company-name">NVIDIA Corporation</span>
+              <span class="quantity-info">12x at <span class="price">$1,190</span></span>
+            </div>
+
+            <div class="details-section">
+              <div class="detail-row">
+                <span class="detail-label">Funding from</span>
+                <div class="funding-sources">
+                  <div class="funding-logo msft"></div>
+                  <div class="funding-logo googl"></div>
+                  <div class="funding-logo amzn partial"></div>
+                </div>
+              </div>
+
+              <div class="detail-group">
+                <p class="detail-label">Recommendation</p>
+                <p class="recommendation-text">Adding AI exposure ahead of earnings. Funded by trimming overweight positions.</p>
+              </div>
+            </div>
+
+            <button class="view-trade-btn">View Trade</button>
+
+            <div class="advisor-row">
+              <span class="advisor-label">Advisor</span>
+              <div class="advisor-avatar marcus"></div>
+              <span class="advisor-name">Marcus Chen</span>
+            </div>
+          </div>
+
+          <div class="card-expanded-content">
+            <div class="expanded-header">
+              <div class="goal-badge buy">Buy</div>
+              <button class="close-btn" onclick="collapseCard(event)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="expanded-ticker-section">
+              <div class="expanded-ticker-logo ticker-logo nvda"></div>
+              <div class="expanded-ticker-symbol">NVDA</div>
+              <div class="expanded-company-name">NVIDIA Corporation</div>
+            </div>
+
+            <div class="expanded-amount-section">
+              <p class="expanded-amount-label">Total Cost</p>
+              <div class="expanded-amount">$14,280</div>
+              <div class="expanded-quantity">12x at <span class="price">$1,190</span></div>
+            </div>
+
+            <div class="expanded-funding-section">
+              <p class="expanded-section-label">Funding from</p>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo msft"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">MSFT</div>
+                    <div class="funding-trade-company">Microsoft Corporation</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$5,840</div>
+                  <div class="funding-trade-quantity">14x at $417.14</div>
+                </div>
+              </div>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo googl"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">GOOGL</div>
+                    <div class="funding-trade-company">Alphabet Inc.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$5,220</div>
+                  <div class="funding-trade-quantity">30x at $174.00</div>
+                </div>
+              </div>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo amzn"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">AMZN</div>
+                    <div class="funding-trade-company">Amazon.com Inc.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$3,220</div>
+                  <div class="funding-trade-quantity">17x at $189.41</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="expanded-trade-meta">
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Trade ID</span>
+                <span class="trade-meta-value">#TRD-2024-1847</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Status</span>
+                <span class="trade-meta-value status-active">Active</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Created</span>
+                <span class="trade-meta-value">Jan 29, 2025 at 9:42 AM</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Last updated</span>
+                <span class="trade-meta-value">2 hours ago</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Expires</span>
+                <span class="trade-meta-value">Jan 31, 2025 at 4:00 PM</span>
+              </div>
+            </div>
+
+            <button class="download-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download Trade Document
+            </button>
+
+            <div class="expanded-recommendation">
+              <p class="expanded-recommendation-label">Recommendation</p>
+              <p class="expanded-recommendation-text">Adding AI exposure ahead of earnings. Funded by trimming overweight positions in MSFT and GOOGL. This positions your portfolio for potential upside in the semiconductor sector.</p>
+            </div>
+
+            <div class="expanded-advisor">
+              <div class="expanded-advisor-avatar advisor-avatar marcus"></div>
+              <div class="expanded-advisor-info">
+                <div class="expanded-advisor-name">Marcus Chen</div>
+                <div class="expanded-advisor-label">Your Advisor</div>
+              </div>
+            </div>
+
+            <div class="expanded-actions">
+              <button class="action-btn decline" onclick="collapseCard(event)">Decline</button>
+              <button class="action-btn approve">Approve</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sell Card -->
+        <div class="card" data-index="1" data-type="sell">
+          <div class="card-minimized">
+            <div class="goal-badge sell">Sell</div>
+
+            <div class="ticker-row">
+              <div class="ticker-left">
+                <div class="ticker-logo tsla"></div>
+                <span class="ticker-symbol">TSLA</span>
+              </div>
+              <span class="trade-amount">$8,745</span>
+            </div>
+
+            <div class="info-row">
+              <span class="company-name">Tesla, Inc.</span>
+              <span class="quantity-info">25x at <span class="price">$349.80</span></span>
+            </div>
+
+            <div class="details-section">
+              <div class="detail-row">
+                <span class="detail-label">Funding to</span>
+                <div class="funding-sources">
+                  <div class="funding-logo cash"></div>
+                </div>
+              </div>
+
+              <div class="detail-group">
+                <p class="detail-label">Recommendation</p>
+                <p class="recommendation-text">Taking profits after 40% run-up. Reduces concentration from 12% to 7%.</p>
+              </div>
+            </div>
+
+            <button class="view-trade-btn">View Trade</button>
+
+            <div class="advisor-row">
+              <span class="advisor-label">Advisor</span>
+              <div class="advisor-avatar sarah"></div>
+              <span class="advisor-name">Sarah Park</span>
+            </div>
+          </div>
+
+          <div class="card-expanded-content">
+            <div class="expanded-header">
+              <div class="goal-badge sell">Sell</div>
+              <button class="close-btn" onclick="collapseCard(event)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="expanded-ticker-section">
+              <div class="expanded-ticker-logo ticker-logo tsla"></div>
+              <div class="expanded-ticker-symbol">TSLA</div>
+              <div class="expanded-company-name">Tesla, Inc.</div>
+            </div>
+
+            <div class="expanded-amount-section">
+              <p class="expanded-amount-label">Total Proceeds</p>
+              <div class="expanded-amount">$8,745</div>
+              <div class="expanded-quantity">25x at <span class="price">$349.80</span></div>
+            </div>
+
+            <div class="expanded-funding-section">
+              <p class="expanded-section-label">Funding to</p>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo cash"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">Cash</div>
+                    <div class="funding-trade-company">Available Balance</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$8,745</div>
+                  <div class="funding-trade-quantity">100% of proceeds</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="expanded-trade-meta">
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Trade ID</span>
+                <span class="trade-meta-value">#TRD-2024-1852</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Status</span>
+                <span class="trade-meta-value status-active">Active</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Created</span>
+                <span class="trade-meta-value">Jan 29, 2025 at 2:15 PM</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Last updated</span>
+                <span class="trade-meta-value">5 hours ago</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Expires</span>
+                <span class="trade-meta-value">Feb 1, 2025 at 4:00 PM</span>
+              </div>
+            </div>
+
+            <button class="download-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download Trade Document
+            </button>
+
+            <div class="expanded-recommendation">
+              <p class="expanded-recommendation-label">Recommendation</p>
+              <p class="expanded-recommendation-text">Taking profits after 40% run-up. Reduces single-stock concentration from 12% to 7% of portfolio. This helps maintain your target risk allocation.</p>
+            </div>
+
+            <div class="expanded-advisor">
+              <div class="expanded-advisor-avatar advisor-avatar sarah"></div>
+              <div class="expanded-advisor-info">
+                <div class="expanded-advisor-name">Sarah Park</div>
+                <div class="expanded-advisor-label">Your Advisor</div>
+              </div>
+            </div>
+
+            <div class="expanded-actions">
+              <button class="action-btn decline" onclick="collapseCard(event)">Decline</button>
+              <button class="action-btn approve">Approve</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rebalance Card -->
+        <div class="card" data-index="2" data-type="rebalance">
+          <div class="card-minimized">
+            <div class="goal-badge rebalance">Rebalance</div>
+
+            <div class="rebalance-flow">
+              <div class="rebalance-side">
+                <div class="rebalance-logos">
+                  <div class="funding-logo meta"></div>
+                  <div class="funding-logo nflx"></div>
+                  <div class="funding-logo dis"></div>
+                </div>
+                <span class="rebalance-amount">$20,451</span>
+              </div>
+              <div class="rebalance-side">
+                <div class="rebalance-logos">
+                  <div class="funding-logo aapl"></div>
+                  <div class="funding-logo msft"></div>
+                  <div class="funding-logo googl"></div>
+                </div>
+                <span class="rebalance-amount">$19,781</span>
+              </div>
+            </div>
+
+            <div class="details-section">
+              <div class="detail-group">
+                <p class="detail-label">Recommendation</p>
+                <p class="recommendation-text">Quarterly rebalance to reduce media exposure and increase core tech holdings.</p>
+              </div>
+            </div>
+
+            <button class="view-trade-btn">View Trade</button>
+
+            <div class="advisor-row">
+              <span class="advisor-label">Advisor</span>
+              <div class="advisor-avatar marcus"></div>
+              <span class="advisor-name">Marcus Chen</span>
+            </div>
+          </div>
+
+          <div class="card-expanded-content">
+            <div class="expanded-header">
+              <div class="goal-badge rebalance">Rebalance</div>
+              <button class="close-btn" onclick="collapseCard(event)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="expanded-funding-section">
+              <p class="expanded-section-label">Selling</p>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo meta"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">META</div>
+                    <div class="funding-trade-company">Meta Platforms Inc.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$8,420</div>
+                  <div class="funding-trade-quantity">15x at $561.33</div>
+                </div>
+              </div>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo nflx"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">NFLX</div>
+                    <div class="funding-trade-company">Netflix Inc.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$6,840</div>
+                  <div class="funding-trade-quantity">9x at $760.00</div>
+                </div>
+              </div>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo dis"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">DIS</div>
+                    <div class="funding-trade-company">Walt Disney Co.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$5,191</div>
+                  <div class="funding-trade-quantity">47x at $110.45</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="expanded-funding-section">
+              <p class="expanded-section-label">Buying</p>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo aapl"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">AAPL</div>
+                    <div class="funding-trade-company">Apple Inc.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$7,524</div>
+                  <div class="funding-trade-quantity">36x at $209.00</div>
+                </div>
+              </div>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo msft"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">MSFT</div>
+                    <div class="funding-trade-company">Microsoft Corporation</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$6,678</div>
+                  <div class="funding-trade-quantity">16x at $417.38</div>
+                </div>
+              </div>
+
+              <div class="funding-trade-item">
+                <div class="funding-trade-left">
+                  <div class="funding-trade-logo googl"></div>
+                  <div class="funding-trade-info">
+                    <div class="funding-trade-ticker">GOOGL</div>
+                    <div class="funding-trade-company">Alphabet Inc.</div>
+                  </div>
+                </div>
+                <div class="funding-trade-right">
+                  <div class="funding-trade-amount">$5,579</div>
+                  <div class="funding-trade-quantity">32x at $174.34</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="expanded-summary">
+              <div class="summary-row">
+                <span class="summary-label">Total selling</span>
+                <span class="summary-value">$20,451</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Total buying</span>
+                <span class="summary-value">$19,781</span>
+              </div>
+              <div class="summary-row net">
+                <span class="summary-label">Net to cash</span>
+                <span class="summary-value positive">+$670</span>
+              </div>
+            </div>
+
+            <div class="expanded-trade-meta">
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Trade ID</span>
+                <span class="trade-meta-value">#TRD-2024-1839</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Status</span>
+                <span class="trade-meta-value status-active">Active</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Created</span>
+                <span class="trade-meta-value">Jan 28, 2025 at 10:30 AM</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Last updated</span>
+                <span class="trade-meta-value">Yesterday</span>
+              </div>
+              <div class="trade-meta-row">
+                <span class="trade-meta-label">Expires</span>
+                <span class="trade-meta-value">Feb 4, 2025 at 4:00 PM</span>
+              </div>
+            </div>
+
+            <button class="download-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download Trade Document
+            </button>
+
+            <div class="expanded-recommendation">
+              <p class="expanded-recommendation-label">Recommendation</p>
+              <p class="expanded-recommendation-text">Quarterly rebalance to reduce media exposure and increase core tech holdings. This trade requires no new cash and keeps your portfolio aligned with your target allocation.</p>
+            </div>
+
+            <div class="expanded-advisor">
+              <div class="expanded-advisor-avatar advisor-avatar marcus"></div>
+              <div class="expanded-advisor-info">
+                <div class="expanded-advisor-name">Marcus Chen</div>
+                <div class="expanded-advisor-label">Your Advisor</div>
+              </div>
+            </div>
+
+            <div class="expanded-actions">
+              <button class="action-btn decline" onclick="collapseCard(event)">Decline</button>
+              <button class="action-btn approve">Approve</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Indicator -->
+      <div class="card-indicator">
+        <div class="indicator-dot active" data-dot="0"></div>
+        <div class="indicator-dot" data-dot="1"></div>
+        <div class="indicator-dot" data-dot="2"></div>
+      </div>
+
+      <!-- Portfolio Stats Section -->
+      <p class="section-label">Portfolio performance</p>
+      <div class="stats-section">
+        <div class="chart-container">
+          <div class="chart-line">
+            <svg viewBox="0 0 350 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="portfolioGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#5e5ce6;stop-opacity:0.2"/>
+                  <stop offset="40%" style="stop-color:#5e5ce6;stop-opacity:0.1"/>
+                  <stop offset="100%" style="stop-color:#5e5ce6;stop-opacity:0"/>
+                </linearGradient>
+                <linearGradient id="investedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#636366;stop-opacity:0.12"/>
+                  <stop offset="40%" style="stop-color:#636366;stop-opacity:0.06"/>
+                  <stop offset="100%" style="stop-color:#636366;stop-opacity:0"/>
+                </linearGradient>
+              </defs>
+
+              <path d="M0,70 C12,72 20,68 35,71 C50,74 62,69 80,72 C98,75 108,68 125,65 C142,62 155,67 172,63 C189,59 200,64 220,58 C240,52 255,56 275,51 C295,46 320,50 350,45 L350,100 L0,100 Z" fill="url(#investedGradient)"/>
+              <path d="M0,75 C12,78 20,72 35,68 C50,64 62,70 80,62 C98,54 108,58 125,48 C142,38 155,44 172,36 C189,28 200,34 220,26 C240,18 255,24 275,18 C295,12 320,16 350,10 L350,100 L0,100 Z" fill="url(#portfolioGradient)"/>
+              <path d="M0,70 C12,72 20,68 35,71 C50,74 62,69 80,72 C98,75 108,68 125,65 C142,62 155,67 172,63 C189,59 200,64 220,58 C240,52 255,56 275,51 C295,46 320,50 350,45" fill="none" stroke="#636366" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M0,75 C12,78 20,72 35,68 C50,64 62,70 80,62 C98,54 108,58 125,48 C142,38 155,44 172,36 C189,28 200,34 220,26 C240,18 255,24 275,18 C295,12 320,16 350,10" fill="none" stroke="#5e5ce6" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="220" cy="26" r="5" fill="#5e5ce6"/>
+              <circle cx="220" cy="58" r="5" fill="#636366"/>
+              <line x1="220" y1="31" x2="220" y2="53" stroke="#8e8e93" stroke-width="1.5" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stats-info">
+          <div class="stats-value">$284,520<span class="cents">.54</span></div>
+          <div class="stats-change">
+            <span>↗</span>
+            <span class="amount">$34,892</span>
+            <span class="percent">(14.32%)</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-dot portfolio"></div>
+            <span>Portfolio value</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot invested"></div>
+            <span>Amount invested</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Distribution Section -->
+      <div class="distribution-card">
+        <p class="distribution-title">Allocation</p>
+        <div class="distribution-bar">
+          <div class="distribution-segment tech"></div>
+          <div class="distribution-segment healthcare"></div>
+          <div class="distribution-segment finance"></div>
+          <div class="distribution-segment energy"></div>
+          <div class="distribution-segment other"></div>
+        </div>
+        <div class="distribution-legend">
+          <div class="distribution-item">
+            <div class="distribution-dot tech"></div>
+            <span class="distribution-label">Tech</span>
+            <span class="distribution-pct">42%</span>
+          </div>
+          <div class="distribution-item">
+            <div class="distribution-dot healthcare"></div>
+            <span class="distribution-label">Health</span>
+            <span class="distribution-pct">18%</span>
+          </div>
+          <div class="distribution-item">
+            <div class="distribution-dot finance"></div>
+            <span class="distribution-label">Finance</span>
+            <span class="distribution-pct">15%</span>
+          </div>
+          <div class="distribution-item">
+            <div class="distribution-dot energy"></div>
+            <span class="distribution-label">Energy</span>
+            <span class="distribution-pct">12%</span>
+          </div>
+          <div class="distribution-item">
+            <div class="distribution-dot other"></div>
+            <span class="distribution-label">Other</span>
+            <span class="distribution-pct">13%</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height: 30px;"></div>
+    </div>
+  </div>
+</PhoneLayout>
+
+<style>
+  /* Back Layer - Nav */
+  .back-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px 8px;
+    background: var(--bg-primary);
+  }
+
+  .nav-left, .nav-right {
+    display: flex;
+    gap: 12px;
+  }
+
+  .swipe-indicator {
+    width: 64px;
+    height: 5px;
+    background: var(--text-muted);
+    border-radius: 3px;
+  }
+
+  .nav-item {
+    opacity: 0.6;
+  }
+
+  .nav-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  .nav-triangle {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 14px solid var(--text-muted);
+  }
+
+  .nav-square {
+    width: 14px;
+    height: 14px;
+    background: var(--text-muted);
+    border-radius: 4px;
+  }
+
+  .nav-diamond {
+    width: 12px;
+    height: 12px;
+    background: var(--text-muted);
+    transform: rotate(45deg);
+    border-radius: 3px;
+  }
+
+  /* Front Layer - Curtain */
+  .curtain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(100% - 40px);
+    background: var(--bg-surface);
+    border-radius: 45px 45px var(--radius-xl) var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top Bar */
+  .top-bar {
+    padding: 60px 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .firm-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  }
+
+  .portfolio-selector {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .portfolio-selector-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .portfolio-selector-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3a3a3c 0%, #2c2c2e 100%);
+  }
+
+  /* Scrollable Content */
+  .scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 30px;
+  }
+
+  .scroll-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Section Labels */
+  .section-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+
+  .section-label:first-child {
+    margin-top: 0;
+  }
+
+  /* Expanded card container */
+  .expanded-card-container {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: rgba(22, 22, 24, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 45px;
+    overflow-y: auto;
+    padding: 60px 20px 40px;
+  }
+
+  .expanded-card-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  :global(.iphone-screen.has-expanded-card) .expanded-card-container {
+    display: block;
+  }
+
+  :global(.iphone-screen.has-expanded-card) .card {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* Stacked Cards Container */
+  .card-stack {
+    position: relative;
+    height: 320px;
+    margin-bottom: 8px;
+  }
+
+  .card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    cursor: grab;
+    user-select: none;
+  }
+
+  .card:active {
+    cursor: grabbing;
+  }
+
+  .card[data-index="0"] {
+    z-index: 3;
+    transform: translateY(0) scale(1);
+  }
+
+  .card[data-index="1"] {
+    z-index: 2;
+    transform: translateY(12px) scale(0.96);
+    opacity: 0.7;
+  }
+
+  .card[data-index="2"] {
+    z-index: 1;
+    transform: translateY(24px) scale(0.92);
+    opacity: 0.4;
+  }
+
+  .card.swiping {
+    transition: none;
+  }
+
+  .card.swiped {
+    transform: translateX(400px) rotate(15deg) !important;
+    opacity: 0 !important;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .card .card-expanded-content {
+    display: none;
+  }
+
+  /* Card Indicator */
+  .card-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: background 0.2s, width 0.2s;
+  }
+
+  .indicator-dot.active {
+    width: 18px;
+    border-radius: 3px;
+    background: var(--text-primary);
+  }
+
+  /* Card Styles */
+  .goal-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin-bottom: 14px;
+  }
+
+  .goal-badge.buy {
+    background: var(--accent-green);
+    color: var(--text-dark);
+  }
+
+  .goal-badge.sell {
+    background: var(--accent-red);
+    color: var(--text-primary);
+  }
+
+  .goal-badge.rebalance {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+  }
+
+  .ticker-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+
+  .ticker-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ticker-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  .ticker-logo.nvda {
+    background: linear-gradient(135deg, #76b900 0%, #2d5016 100%);
+  }
+
+  .ticker-logo.tsla {
+    background: linear-gradient(135deg, #e31937 0%, #8b0a1e 100%);
+  }
+
+  .ticker-symbol {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .trade-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .company-name {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .quantity-info {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .quantity-info .price {
+    color: var(--text-primary);
+  }
+
+  .details-section {
+    margin-bottom: 14px;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .detail-label {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .funding-sources {
+    display: flex;
+    align-items: center;
+  }
+
+  .funding-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-card);
+    margin-left: -8px;
+    position: relative;
+  }
+
+  .funding-logo:first-child {
+    margin-left: 0;
+  }
+
+  .funding-logo.msft { background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%); }
+  .funding-logo.googl { background: linear-gradient(135deg, #4285f4 0%, #1a53c0 100%); }
+  .funding-logo.amzn { background: linear-gradient(135deg, #ff9900 0%, #c77600 100%); }
+  .funding-logo.cash { background: linear-gradient(135deg, #8e8e93 0%, #636366 100%); }
+  .funding-logo.meta { background: linear-gradient(135deg, #0082fb 0%, #004c99 100%); }
+  .funding-logo.nflx { background: linear-gradient(135deg, #e50914 0%, #8b0a0a 100%); }
+  .funding-logo.dis { background: linear-gradient(135deg, #113ccf 0%, #0a2178 100%); }
+  .funding-logo.aapl { background: linear-gradient(135deg, #555555 0%, #222222 100%); }
+
+  .funding-logo.partial::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 50%;
+    height: calc(100% + 4px);
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 0 12px 12px 0;
+  }
+
+  .detail-group {
+    margin-bottom: 12px;
+  }
+
+  .detail-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .detail-group .detail-label {
+    margin-bottom: 4px;
+  }
+
+  .recommendation-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  .view-trade-btn {
+    width: 100%;
+    padding: 12px;
+    background: #e8e8e8;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+
+  .advisor-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .advisor-label {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .advisor-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+
+  .advisor-avatar.marcus { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  .advisor-avatar.sarah { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+  .advisor-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* Rebalance Card */
+  .rebalance-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .rebalance-side {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .rebalance-logos {
+    display: flex;
+    align-items: center;
+  }
+
+  .rebalance-logos .funding-logo {
+    margin-left: -8px;
+  }
+
+  .rebalance-logos .funding-logo:first-child {
+    margin-left: 0;
+  }
+
+  .rebalance-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  /* Expanded Card Styles */
+  .expanded-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: background 0.2s;
+  }
+
+  .close-btn:hover {
+    background: #333;
+  }
+
+  .expanded-ticker-section {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .expanded-ticker-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+  }
+
+  .expanded-ticker-symbol {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .expanded-company-name {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  .expanded-amount-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .expanded-amount-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .expanded-amount {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .expanded-quantity {
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  .expanded-quantity .price {
+    color: var(--text-primary);
+  }
+
+  .expanded-funding-section {
+    margin-bottom: 24px;
+  }
+
+  .expanded-section-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  .funding-trade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+  }
+
+  .funding-trade-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .funding-trade-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .funding-trade-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  .funding-trade-logo.msft { background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%); }
+  .funding-trade-logo.googl { background: linear-gradient(135deg, #4285f4 0%, #1a53c0 100%); }
+  .funding-trade-logo.amzn { background: linear-gradient(135deg, #ff9900 0%, #c77600 100%); }
+  .funding-trade-logo.cash { background: linear-gradient(135deg, #8e8e93 0%, #636366 100%); }
+  .funding-trade-logo.meta { background: linear-gradient(135deg, #0082fb 0%, #004c99 100%); }
+  .funding-trade-logo.nflx { background: linear-gradient(135deg, #e50914 0%, #8b0a0a 100%); }
+  .funding-trade-logo.dis { background: linear-gradient(135deg, #113ccf 0%, #0a2178 100%); }
+  .funding-trade-logo.aapl { background: linear-gradient(135deg, #555555 0%, #222222 100%); }
+
+  .funding-trade-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .funding-trade-ticker {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .funding-trade-company {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .funding-trade-right {
+    text-align: right;
+  }
+
+  .funding-trade-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .funding-trade-quantity {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .expanded-trade-meta {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+
+  .trade-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .trade-meta-row:last-child {
+    border-bottom: none;
+  }
+
+  .trade-meta-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .trade-meta-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .trade-meta-value.status-active {
+    color: var(--accent-green);
+  }
+
+  .download-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: all 0.2s ease;
+  }
+
+  .download-btn:hover {
+    background: var(--bg-card);
+    border-color: var(--text-muted);
+    color: var(--text-primary);
+  }
+
+  .download-btn svg {
+    opacity: 0.7;
+  }
+
+  .expanded-recommendation {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .expanded-recommendation-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .expanded-recommendation-text {
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .expanded-advisor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+    margin-bottom: 24px;
+  }
+
+  .expanded-advisor-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
+
+  .expanded-advisor-info {
+    flex: 1;
+  }
+
+  .expanded-advisor-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .expanded-advisor-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .expanded-actions {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .action-btn {
+    flex: 1;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .action-btn:active {
+    transform: scale(0.98);
+  }
+
+  .action-btn.approve {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+  }
+
+  .action-btn.decline {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .expanded-summary {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .summary-row:last-child {
+    border-bottom: none;
+  }
+
+  .summary-row.net {
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+
+  .summary-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .summary-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .summary-value.positive {
+    color: var(--accent-green);
+  }
+
+  /* Portfolio Stats */
+  .stats-section {
+    margin: 0 -20px;
+    padding: 0 0 24px;
+  }
+
+  .chart-container {
+    height: 120px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .chart-line svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .stats-info {
+    text-align: center;
+  }
+
+  .stats-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .stats-value .cents {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .stats-change {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .stats-change .amount {
+    color: var(--accent-green);
+  }
+
+  .stats-change .percent {
+    color: var(--text-secondary);
+  }
+
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .legend-dot.portfolio { background: var(--accent-blue); }
+  .legend-dot.invested { background: var(--text-muted); }
+
+  /* Distribution */
+  .distribution-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+  }
+
+  .distribution-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+
+  .distribution-bar {
+    height: 8px;
+    border-radius: 4px;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  .distribution-segment { height: 100%; }
+  .distribution-segment.tech { background: var(--accent-blue); width: 42%; }
+  .distribution-segment.healthcare { background: var(--accent-green); width: 18%; }
+  .distribution-segment.finance { background: #ff9f0a; width: 15%; }
+  .distribution-segment.energy { background: var(--accent-red); width: 12%; }
+  .distribution-segment.other { background: var(--text-muted); width: 13%; }
+
+  .distribution-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  .distribution-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .distribution-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+
+  .distribution-dot.tech { background: var(--accent-blue); }
+  .distribution-dot.healthcare { background: var(--accent-green); }
+  .distribution-dot.finance { background: #ff9f0a; }
+  .distribution-dot.energy { background: var(--accent-red); }
+  .distribution-dot.other { background: var(--text-muted); }
+
+  .distribution-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .distribution-pct {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+</style>
+
+<script is:inline>
+  const iphoneScreen = document.querySelector('.iphone-screen');
+  const cardStack = document.getElementById('cardStack');
+  const cards = Array.from(cardStack.querySelectorAll('.card'));
+  const dots = document.querySelectorAll('.indicator-dot');
+  const expandedContainer = document.getElementById('expandedCardContainer');
+
+  let currentIndex = 0;
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+  let dragStartTime = 0;
+
+  function updateCards() {
+    cards.forEach((card, i) => {
+      const relativeIndex = (i - currentIndex + cards.length) % cards.length;
+      card.setAttribute('data-index', relativeIndex);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  function expandCard(card) {
+    const expandedContent = card.querySelector('.card-expanded-content');
+    if (expandedContent) {
+      expandedContainer.innerHTML = expandedContent.innerHTML;
+    }
+    iphoneScreen.classList.add('has-expanded-card');
+  }
+
+  function collapseCard(event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    iphoneScreen.classList.remove('has-expanded-card');
+    expandedContainer.innerHTML = '';
+  }
+
+  document.querySelectorAll('.view-trade-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.card');
+      expandCard(card);
+    });
+  });
+
+  cards.forEach((card) => {
+    card.addEventListener('mousedown', (e) => startDrag(e, card));
+    card.addEventListener('touchstart', (e) => startDrag(e, card), { passive: true });
+  });
+
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('touchmove', drag, { passive: true });
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('touchend', endDrag);
+
+  function startDrag(e, card) {
+    if (iphoneScreen.classList.contains('has-expanded-card')) return;
+    if (card.getAttribute('data-index') !== '0') return;
+    if (e.target.closest('.view-trade-btn')) return;
+
+    isDragging = true;
+    dragStartTime = Date.now();
+    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    card.classList.add('swiping');
+  }
+
+  function drag(e) {
+    if (!isDragging) return;
+
+    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const diff = currentX - startX;
+
+    const activeCard = cards.find(c => c.getAttribute('data-index') === '0');
+    if (activeCard && diff > 0) {
+      activeCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.05}deg)`;
+    }
+  }
+
+  function endDrag(e) {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const activeCard = cards.find(c => c.getAttribute('data-index') === '0');
+    if (!activeCard) return;
+
+    activeCard.classList.remove('swiping');
+
+    const diff = currentX - startX;
+    const dragDuration = Date.now() - dragStartTime;
+
+    if (dragDuration < 200 && Math.abs(diff) < 10) {
+      activeCard.style.transform = '';
+      expandCard(activeCard);
+      startX = 0;
+      currentX = 0;
+      return;
+    }
+
+    if (diff > 100) {
+      activeCard.classList.add('swiped');
+
+      setTimeout(() => {
+        activeCard.classList.remove('swiped');
+        activeCard.style.transform = '';
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCards();
+      }, 300);
+    } else {
+      activeCard.style.transform = '';
+    }
+
+    startX = 0;
+    currentX = 0;
+  }
+
+  expandedContainer.addEventListener('click', (e) => {
+    if (e.target === expandedContainer) {
+      collapseCard(e);
+    }
+    if (e.target.closest('.close-btn') || e.target.closest('.action-btn.decline')) {
+      collapseCard(e);
+    }
+  });
+</script>
+</PhoneLayout>

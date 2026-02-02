@@ -1,0 +1,113 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style is:global>
+    :root {
+      /* Colors */
+      --bg-primary: #000000;
+      --bg-surface: #161618;
+      --bg-card: #252528;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-primary: #ffffff;
+      --text-secondary: #8e8e93;
+      --text-muted: #636366;
+      --text-dark: #000000;
+
+      /* Accent colors */
+      --accent-green: #30d158;
+      --accent-red: #ff453a;
+      --accent-blue: #5e5ce6;
+
+      /* Radii */
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-xl: 32px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+  <style>
+    .iphone-frame {
+      width: 390px;
+      height: 844px;
+      background: #000;
+      border-radius: 55px;
+      padding: 11px;
+      position: relative;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.1),
+        0 50px 100px rgba(0, 0, 0, 0.5);
+    }
+
+    .iphone-frame::before {
+      content: '';
+      position: absolute;
+      right: -2px;
+      top: 180px;
+      width: 3px;
+      height: 80px;
+      background: #333;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .iphone-screen {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+      border-radius: 45px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .dynamic-island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 36px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+      <div class="dynamic-island"></div>
+      <slot />
+    </div>
+  </div>
+</body>
+</html>

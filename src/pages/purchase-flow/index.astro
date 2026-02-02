@@ -1,0 +1,2086 @@
+---
+import PhoneLayout from '../../layouts/PhoneLayout.astro';
+---
+
+<PhoneLayout title="Trading Flow Prototype">
+  <div class="screen">
+    <!-- Sticky Header -->
+    <div class="sticky-header">
+      <div class="header">
+        <button class="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+
+        <!-- Mode Toggle -->
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-toggle-btn active" id="marketBtn" data-mode="market">Market</button>
+          <button class="mode-toggle-btn" id="limitBtn" data-mode="limit">Limit</button>
+        </div>
+      </div>
+
+      <!-- Sticky Warning Banner -->
+      <div class="sticky-warning" id="stickyWarning">
+        <div class="sticky-warning-icon">
+          <svg viewBox="0 0 20 20">
+            <path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z"/>
+          </svg>
+        </div>
+        <div class="sticky-warning-content">
+          <span class="sticky-warning-text" id="warningText">AAPL exceeds market limits</span>
+          <button class="sticky-warning-cta" id="warningCta">Switch to Limit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-content">
+      <!-- Stock Info -->
+      <div class="stock-info">
+        <div class="stock-logo">AAPL</div>
+        <div class="stock-details">
+          <h1>Apple Inc.</h1>
+          <div class="price-row">
+            <span class="current-price">$178.32</span>
+            <span class="change">↗ 2.4%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Card -->
+      <div class="input-card" id="inputCard">
+        <!-- Market Order View -->
+        <div class="market-order-view" id="marketView">
+          <div class="input-label">Amount to invest</div>
+          <div class="amount-input-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="text" class="amount-input" id="amountInput" placeholder="0" inputmode="numeric">
+          </div>
+          <div class="estimate-row">
+            <span class="estimate-label">You'll receive approximately</span>
+            <span class="estimate-value" id="shareEstimate">0 shares</span>
+          </div>
+        </div>
+
+        <!-- Limit Order View -->
+        <div class="limit-order-view" id="limitView">
+          <div class="limit-inputs">
+            <div class="limit-input-row">
+              <div class="limit-input-group">
+                <label>Shares</label>
+                <input type="text" id="sharesInput" placeholder="0" inputmode="numeric">
+              </div>
+              <div class="limit-input-group">
+                <label>Limit Price</label>
+                <input type="text" id="limitPriceInput" placeholder="$0.00" inputmode="decimal">
+              </div>
+            </div>
+
+            <div class="total-row">
+              <span class="total-label">Estimated Total</span>
+              <span class="total-value" id="totalValue">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="limit-note" id="limitNote">
+        Your order will only execute if the price is at or below your limit. If the price rises, your order may not fill.
+      </p>
+
+      <!-- Orchestration Toggle Row -->
+      <div class="orchestration-row">
+        <span class="orchestration-label">Fund with other positions</span>
+        <div class="toggle-switch" id="orchestrationToggle"></div>
+      </div>
+
+      <!-- Funding Section -->
+      <div class="funding-section" id="fundingSection">
+        <!-- Funding Cards Container -->
+        <div id="fundingCards"></div>
+
+        <!-- Add Source Button -->
+        <button class="add-source-btn" id="addSourceBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Add funding source
+        </button>
+
+        <!-- Funding Summary -->
+        <div class="funding-summary" id="fundingSummary">
+          <div class="summary-row hidden" id="cashSummaryRow">
+            <span class="summary-label">From cash</span>
+            <span class="summary-value" id="cashTotal">$0.00</span>
+          </div>
+          <div class="summary-row hidden" id="msftSummaryRow">
+            <span class="summary-label">From MSFT sale</span>
+            <span class="summary-value" id="msftTotal">$0</span>
+          </div>
+          <div class="summary-row hidden" id="tslaSummaryRow">
+            <span class="summary-label">From TSLA sale</span>
+            <span class="summary-value" id="tslaTotal">$0</span>
+          </div>
+          <div class="summary-row hidden" id="googlSummaryRow">
+            <span class="summary-label">From GOOGL sale</span>
+            <span class="summary-value" id="googlTotal">$0</span>
+          </div>
+          <div class="summary-row hidden" id="amznSummaryRow">
+            <span class="summary-label">From AMZN sale</span>
+            <span class="summary-value" id="amznTotal">$0</span>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row">
+            <span class="summary-label">Total funding</span>
+            <span class="summary-value positive" id="totalFunding">$0.00</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Goal amount</span>
+            <span class="summary-value" id="goalAmount">$0.00</span>
+          </div>
+          <div class="buffer-row" id="bufferRow">
+            <span class="buffer-label">Buffer</span>
+            <span class="buffer-value" id="bufferValue">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Expiry Selector (only in limit mode) -->
+        <div class="expiry-section" id="expirySection">
+          <div class="expiry-label">Expires after</div>
+          <div class="expiry-options">
+            <button class="expiry-option selected" data-hours="1">
+              <div class="time">1</div>
+              <div class="label">hour</div>
+            </button>
+            <button class="expiry-option" data-hours="4">
+              <div class="time">4</div>
+              <div class="label">hours</div>
+            </button>
+            <button class="expiry-option" data-hours="12">
+              <div class="time">12</div>
+              <div class="label">hours</div>
+            </button>
+            <button class="expiry-option" data-hours="24">
+              <div class="time">24</div>
+              <div class="label">hours</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Conditions Summary -->
+        <div class="conditions-summary">
+          <div class="conditions-title">What happens</div>
+          <p class="condition-sentence" id="conditionSentence">
+            Add funding sources above to see the execution plan.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="bottom-section">
+      <div class="balance-row" id="balanceRow">
+        <span class="balance-label">Available balance</span>
+        <span class="balance-value">$12,450.00</span>
+      </div>
+      <button class="buy-btn" id="buyBtn" disabled>Review Order</button>
+    </div>
+  </div>
+
+  <!-- Funding Source Picker Modal -->
+  <div class="modal-overlay" id="sourceModal">
+    <div class="modal-content">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Add funding source</div>
+
+      <!-- Cash Option -->
+      <div class="source-option" id="cashOption" data-source="CASH">
+        <div class="cash-logo">💵</div>
+        <div class="source-option-info">
+          <div class="source-option-name">Cash</div>
+          <div class="source-option-detail">Use available balance</div>
+        </div>
+        <div class="source-option-value">
+          <div class="source-option-price">$12,450.00</div>
+          <div class="source-option-total">available</div>
+        </div>
+      </div>
+
+      <div class="modal-divider"></div>
+      <div class="modal-section-label">Your positions</div>
+
+      <div class="source-option" data-source="MSFT" data-price="374.56" data-shares="75" data-name="Microsoft" data-threshold="5000">
+        <div class="stock-logo small">MSFT</div>
+        <div class="source-option-info">
+          <div class="source-option-name">Microsoft</div>
+          <div class="source-option-detail">75 shares</div>
+        </div>
+        <div class="source-option-value">
+          <div class="source-option-price">$374.56</div>
+          <div class="source-option-total">$28,092</div>
+        </div>
+      </div>
+
+      <div class="source-option" data-source="TSLA" data-price="248.92" data-shares="100" data-name="Tesla" data-threshold="4000">
+        <div class="stock-logo small">TSLA</div>
+        <div class="source-option-info">
+          <div class="source-option-name">Tesla</div>
+          <div class="source-option-detail">100 shares</div>
+        </div>
+        <div class="source-option-value">
+          <div class="source-option-price">$248.92</div>
+          <div class="source-option-total">$24,892</div>
+        </div>
+      </div>
+
+      <div class="source-option" data-source="GOOGL" data-price="142.87" data-shares="200" data-name="Alphabet" data-threshold="6000">
+        <div class="stock-logo small">GOOGL</div>
+        <div class="source-option-info">
+          <div class="source-option-name">Alphabet</div>
+          <div class="source-option-detail">200 shares</div>
+        </div>
+        <div class="source-option-value">
+          <div class="source-option-price">$142.87</div>
+          <div class="source-option-total">$28,574</div>
+        </div>
+      </div>
+
+      <div class="source-option" data-source="AMZN" data-price="156.78" data-shares="120" data-name="Amazon" data-threshold="5500">
+        <div class="stock-logo small">AMZN</div>
+        <div class="source-option-info">
+          <div class="source-option-name">Amazon</div>
+          <div class="source-option-detail">120 shares</div>
+        </div>
+        <div class="source-option-value">
+          <div class="source-option-price">$156.78</div>
+          <div class="source-option-total">$18,813</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="state-indicator">
+    <div class="state-dots">
+      <div class="state-dot active" id="dot1"></div>
+      <div class="state-dot" id="dot2"></div>
+      <div class="state-dot" id="dot3"></div>
+    </div>
+    <span class="state-text" id="stateText">Enter amount (try >$5k)</span>
+    <button class="reset-btn" id="resetBtn">Reset</button>
+  </div>
+</PhoneLayout>
+
+<style>
+  /* Use DM Sans for this flow */
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  /* Override font for this page */
+  :global(.iphone-screen) {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Extended color variables for this flow */
+  :root {
+    --bg-input: #0d0d0d;
+    --bg-card-elevated: #1a1a1a;
+    --text-tertiary: rgba(255, 255, 255, 0.35);
+    --green-primary: #00DC82;
+    --green-dim: rgba(0, 220, 130, 0.15);
+    --green-glow: rgba(0, 220, 130, 0.3);
+    --warning-primary: #FFB020;
+    --warning-dim: rgba(255, 176, 32, 0.12);
+    --warning-border: rgba(255, 176, 32, 0.4);
+    --red-primary: #FF4757;
+    --red-dim: rgba(255, 71, 87, 0.12);
+    --blue-primary: #4A9EFF;
+    --blue-dim: rgba(74, 158, 255, 0.12);
+  }
+
+  .screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Sticky Header */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg-primary);
+    padding: 60px 20px 0;
+  }
+
+  .screen-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+    scrollbar-width: none;
+  }
+
+  .screen-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background: var(--bg-card-elevated);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .back-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--text-primary);
+  }
+
+  /* Mode Toggle */
+  .mode-toggle {
+    display: flex;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .mode-toggle-btn {
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+  }
+
+  .mode-toggle-btn.active {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+  }
+
+  .mode-toggle-btn.limit-active {
+    background: var(--green-primary);
+    color: var(--bg-primary);
+  }
+
+  /* Sticky Warning Banner */
+  .sticky-warning {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+  }
+
+  .sticky-warning.visible {
+    display: flex;
+  }
+
+  .sticky-warning-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .sticky-warning-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--warning-primary);
+  }
+
+  .sticky-warning-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sticky-warning-text {
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .sticky-warning-cta {
+    padding: 6px 12px;
+    background: var(--warning-primary);
+    color: #000;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .sticky-warning-cta:hover {
+    filter: brightness(1.1);
+  }
+
+  /* Stock Info */
+  .stock-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .stock-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .stock-logo.small {
+    width: 36px;
+    height: 36px;
+    font-size: 10px;
+  }
+
+  .stock-details h1 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .stock-details .price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stock-details .current-price {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .stock-details .change {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-primary);
+    background: var(--green-dim);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  /* Input Card */
+  .input-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    transition: all 0.4s ease;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .input-card.warning {
+    border-color: var(--warning-border);
+    background: linear-gradient(180deg, var(--warning-dim) 0%, var(--bg-card) 100%);
+  }
+
+  .input-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  /* Market Order View */
+  .market-order-view {
+    transition: all 0.4s ease;
+  }
+
+  .market-order-view.hidden {
+    display: none;
+  }
+
+  .amount-input-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .currency-symbol {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .amount-input {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .amount-input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .estimate-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 16px;
+  }
+
+  .estimate-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .estimate-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Limit Order View */
+  .limit-order-view {
+    display: none;
+  }
+
+  .limit-order-view.visible {
+    display: block;
+  }
+
+  .limit-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .limit-input-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .limit-input-group {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    transition: all 0.2s ease;
+  }
+
+  .limit-input-group:focus-within {
+    border-color: var(--green-primary);
+    box-shadow: 0 0 0 3px var(--green-dim);
+  }
+
+  .limit-input-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .limit-input-group input {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .limit-input-group input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--green-dim);
+    border-radius: var(--radius-md);
+  }
+
+  .total-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .total-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green-primary);
+  }
+
+  .limit-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 12px;
+    line-height: 1.5;
+    padding: 0 4px;
+    display: none;
+  }
+
+  .limit-note.visible {
+    display: block;
+  }
+
+  /* Orchestration Toggle Row */
+  .orchestration-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    margin-bottom: 8px;
+  }
+
+  .orchestration-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* Toggle Switch */
+  .toggle-switch {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .toggle-switch.active {
+    background: var(--blue-primary);
+    border-color: var(--blue-primary);
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: all 0.25s ease;
+  }
+
+  .toggle-switch.active::after {
+    left: 23px;
+    background: #fff;
+  }
+
+  /* Funding Section */
+  .funding-section {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .funding-section.visible {
+    max-height: 1500px;
+    opacity: 1;
+  }
+
+  .funding-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .funding-card.warning {
+    border-color: var(--warning-border);
+    background: linear-gradient(180deg, var(--warning-dim) 0%, var(--bg-card) 100%);
+  }
+
+  .funding-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .funding-stock-info {
+    flex: 1;
+  }
+
+  .funding-stock-name {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .funding-stock-holding {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .remove-funding {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--red-dim);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+  }
+
+  .remove-funding:hover {
+    opacity: 1;
+  }
+
+  .remove-funding svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--red-primary);
+  }
+
+  /* Cash icon */
+  .cash-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--green-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Market funding inputs */
+  .funding-market-inputs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .funding-market-inputs .funding-input-group {
+    flex: 1;
+  }
+
+  .funding-market-value {
+    text-align: right;
+    padding: 10px 0;
+    min-width: 80px;
+  }
+
+  .funding-market-value .label {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+
+  .funding-market-value .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Limit funding inputs */
+  .funding-limit-inputs {
+    display: flex;
+    gap: 10px;
+  }
+
+  .funding-input-group {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    transition: all 0.2s ease;
+  }
+
+  .funding-input-group:focus-within {
+    border-color: var(--green-primary);
+    box-shadow: 0 0 0 2px var(--green-dim);
+  }
+
+  .funding-input-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+
+  .funding-input-group input {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .funding-potential {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .funding-potential-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  .funding-potential-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Cash card simplified */
+  .cash-card .funding-card-header {
+    margin-bottom: 12px;
+  }
+
+  .cash-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cash-input-row span {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .cash-input {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .cash-input:focus {
+    border-color: var(--green-primary);
+    box-shadow: 0 0 0 2px var(--green-dim);
+  }
+
+  /* Add Source Button */
+  .add-source-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-lg);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    margin-bottom: 16px;
+  }
+
+  .add-source-btn:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+  }
+
+  .add-source-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Funding Summary */
+  .funding-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .summary-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .summary-row.hidden {
+    display: none;
+  }
+
+  .summary-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .summary-value {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .summary-value.positive {
+    color: var(--green-primary);
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 12px 0;
+  }
+
+  .buffer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: var(--green-dim);
+    border-radius: var(--radius-sm);
+    margin-top: 12px;
+  }
+
+  .buffer-row.short {
+    background: var(--warning-dim);
+  }
+
+  .buffer-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .buffer-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green-primary);
+  }
+
+  .buffer-row.short .buffer-value {
+    color: var(--warning-primary);
+  }
+
+  /* Expiry Selector */
+  .expiry-section {
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .expiry-section.visible {
+    display: block;
+  }
+
+  .expiry-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .expiry-options {
+    display: flex;
+    gap: 8px;
+  }
+
+  .expiry-option {
+    flex: 1;
+    padding: 12px 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .expiry-option:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .expiry-option.selected {
+    border-color: var(--green-primary);
+    background: var(--green-dim);
+  }
+
+  .expiry-option .time {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .expiry-option .label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .expiry-option.selected .time {
+    color: var(--green-primary);
+  }
+
+  /* Conditions Summary */
+  .conditions-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .conditions-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .condition-sentence {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  .condition-sentence :global(strong) {
+    color: var(--green-primary);
+    font-weight: 600;
+  }
+
+  .condition-sentence :global(.sell) {
+    color: var(--red-primary);
+  }
+
+  .condition-sentence :global(.buy) {
+    color: var(--green-primary);
+  }
+
+  /* Bottom Section */
+  .bottom-section {
+    padding: 16px 20px 34px;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .balance-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .balance-row.hidden {
+    display: none;
+  }
+
+  .balance-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .balance-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .buy-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--green-primary);
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .buy-btn:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  .buy-btn:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .buy-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .buy-btn.orchestrated {
+    background: linear-gradient(135deg, var(--blue-primary) 0%, #6B5BFF 100%);
+  }
+
+  /* Stock Picker Modal */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: flex-end;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-content {
+    width: 100%;
+    background: var(--bg-card);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    max-height: 70%;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.visible .modal-content {
+    transform: translateY(0);
+  }
+
+  .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border-subtle);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  .modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .modal-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 14px 8px 0;
+  }
+
+  .modal-divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 8px 0;
+  }
+
+  .source-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .source-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .source-option.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .source-option-info {
+    flex: 1;
+  }
+
+  .source-option-name {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .source-option-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .source-option-value {
+    text-align: right;
+  }
+
+  .source-option-price {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .source-option-total {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* State indicator */
+  .state-indicator {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    z-index: 100;
+  }
+
+  .state-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .state-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+    transition: all 0.3s ease;
+  }
+
+  .state-dot.active {
+    background: var(--green-primary);
+    box-shadow: 0 0 10px var(--green-glow);
+  }
+
+  .state-dot.warning {
+    background: var(--warning-primary);
+    box-shadow: 0 0 10px rgba(255, 176, 32, 0.4);
+  }
+
+  .state-dot.blue {
+    background: var(--blue-primary);
+    box-shadow: 0 0 10px rgba(74, 158, 255, 0.4);
+  }
+
+  .state-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    max-width: 180px;
+  }
+
+  .reset-btn {
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .reset-btn:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+  }
+</style>
+
+<script is:inline>
+  const STOCK_PRICE = 178.32;
+  const AAPL_THRESHOLD = 5000;
+  const CASH_AVAILABLE = 12450;
+
+  const stockData = {
+    AAPL: { price: 178.32, threshold: 5000, name: 'Apple' },
+    MSFT: { price: 374.56, threshold: 5000, name: 'Microsoft' },
+    TSLA: { price: 248.92, threshold: 4000, name: 'Tesla' },
+    GOOGL: { price: 142.87, threshold: 6000, name: 'Alphabet' },
+    AMZN: { price: 156.78, threshold: 5500, name: 'Amazon' }
+  };
+
+  const amountInput = document.getElementById('amountInput');
+  const shareEstimate = document.getElementById('shareEstimate');
+  const inputCard = document.getElementById('inputCard');
+  const marketBtn = document.getElementById('marketBtn');
+  const limitBtn = document.getElementById('limitBtn');
+  const marketView = document.getElementById('marketView');
+  const limitView = document.getElementById('limitView');
+  const limitNote = document.getElementById('limitNote');
+  const sharesInput = document.getElementById('sharesInput');
+  const limitPriceInput = document.getElementById('limitPriceInput');
+  const totalValue = document.getElementById('totalValue');
+  const buyBtn = document.getElementById('buyBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const stateText = document.getElementById('stateText');
+  const balanceRow = document.getElementById('balanceRow');
+  const dot1 = document.getElementById('dot1');
+  const dot2 = document.getElementById('dot2');
+  const dot3 = document.getElementById('dot3');
+  const stickyWarning = document.getElementById('stickyWarning');
+  const warningText = document.getElementById('warningText');
+  const warningCta = document.getElementById('warningCta');
+  const orchestrationToggle = document.getElementById('orchestrationToggle');
+  const fundingSection = document.getElementById('fundingSection');
+  const addSourceBtn = document.getElementById('addSourceBtn');
+  const sourceModal = document.getElementById('sourceModal');
+  const fundingCards = document.getElementById('fundingCards');
+  const expirySection = document.getElementById('expirySection');
+  const expiryOptions = document.querySelectorAll('.expiry-option');
+  const cashOption = document.getElementById('cashOption');
+
+  let currentMode = 'market';
+  let isOrchestrated = false;
+  let selectedExpiry = 1;
+  let fundingSources = [];
+  let currentAmount = 0;
+  let currentShares = 0;
+  let currentLimitPrice = STOCK_PRICE;
+  let offendingItems = [];
+
+  function formatNumber(num) {
+    return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function formatNumberInt(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function parseNumber(str) {
+    return parseFloat(str.toString().replace(/[^0-9.]/g, '')) || 0;
+  }
+
+  function updateStateIndicator(state) {
+    dot1.classList.remove('active', 'warning', 'blue');
+    dot2.classList.remove('active', 'warning', 'blue');
+    dot3.classList.remove('active', 'warning', 'blue');
+
+    switch(state) {
+      case 'default':
+        dot1.classList.add('active');
+        stateText.textContent = 'Enter amount (try >$5k)';
+        break;
+      case 'valid-market':
+        dot1.classList.add('active');
+        stateText.textContent = 'Market order ready';
+        break;
+      case 'warning':
+        dot2.classList.add('warning');
+        stateText.textContent = 'Threshold warning';
+        break;
+      case 'limit':
+        dot2.classList.add('active');
+        stateText.textContent = 'Limit order mode';
+        break;
+      case 'orchestrated-market':
+        dot3.classList.add('blue');
+        stateText.textContent = 'Orchestrated (market)';
+        break;
+      case 'orchestrated-limit':
+        dot3.classList.add('blue');
+        stateText.textContent = 'Orchestrated (limit)';
+        break;
+    }
+  }
+
+  function checkThresholds() {
+    const offenders = [];
+
+    if (currentMode === 'market' && currentAmount > AAPL_THRESHOLD) {
+      offenders.push('AAPL');
+    }
+
+    if (currentMode === 'market') {
+      for (const source of fundingSources) {
+        if (source === 'CASH') continue;
+        const sharesInput = document.querySelector(`.shares-sell-input[data-stock="${source}"]`);
+        if (sharesInput) {
+          const shares = parseNumber(sharesInput.value);
+          const price = stockData[source].price;
+          const value = shares * price;
+          if (value > stockData[source].threshold) {
+            offenders.push(source);
+          }
+        }
+      }
+    }
+
+    return offenders;
+  }
+
+  function updateWarningDisplay() {
+    offendingItems = checkThresholds();
+
+    document.querySelectorAll('.funding-card').forEach(card => {
+      const source = card.dataset.source;
+      card.classList.toggle('warning', offendingItems.includes(source));
+    });
+
+    inputCard.classList.toggle('warning', offendingItems.includes('AAPL'));
+
+    if (offendingItems.length > 0 && currentMode === 'market') {
+      let warningMessage;
+      if (offendingItems.length === 1) {
+        warningMessage = `${offendingItems[0]} exceeds market limits`;
+      } else {
+        warningMessage = `${offendingItems.length} items exceed market limits`;
+      }
+      warningText.textContent = warningMessage;
+      stickyWarning.classList.add('visible');
+      buyBtn.disabled = true;
+    } else {
+      stickyWarning.classList.remove('visible');
+      updateButtonState();
+    }
+
+    if (offendingItems.length > 0 && currentMode === 'market') {
+      updateStateIndicator('warning');
+    } else if (isOrchestrated) {
+      updateStateIndicator(currentMode === 'market' ? 'orchestrated-market' : 'orchestrated-limit');
+    } else if (currentMode === 'limit') {
+      updateStateIndicator('limit');
+    } else if (currentAmount > 0) {
+      updateStateIndicator('valid-market');
+    } else {
+      updateStateIndicator('default');
+    }
+  }
+
+  function updateButtonState() {
+    if (offendingItems.length > 0 && currentMode === 'market') {
+      buyBtn.disabled = true;
+      return;
+    }
+
+    if (isOrchestrated) {
+      const totalFunding = parseNumber(document.getElementById('totalFunding').textContent);
+      const goalAmount = currentAmount;
+      buyBtn.disabled = totalFunding < goalAmount || goalAmount === 0 || fundingSources.length === 0;
+    } else {
+      if (currentMode === 'market') {
+        buyBtn.disabled = currentAmount === 0;
+      } else {
+        buyBtn.disabled = !currentShares || !currentLimitPrice;
+      }
+    }
+  }
+
+  amountInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/[^0-9]/g, '');
+    if (value) {
+      e.target.value = formatNumberInt(parseInt(value));
+    }
+
+    currentAmount = parseNumber(e.target.value);
+    const shares = (currentAmount / STOCK_PRICE).toFixed(2);
+    currentShares = parseFloat(shares);
+    shareEstimate.textContent = `${shares} shares`;
+
+    updateWarningDisplay();
+
+    if (isOrchestrated) {
+      updateOrchestrationTotals();
+    }
+  });
+
+  function switchToLimitMode() {
+    currentMode = 'limit';
+
+    marketBtn.classList.remove('active');
+    limitBtn.classList.add('active', 'limit-active');
+
+    if (currentShares === 0 && currentAmount > 0) {
+      currentShares = Math.floor(currentAmount / STOCK_PRICE);
+      currentLimitPrice = STOCK_PRICE;
+    }
+
+    sharesInput.value = currentShares || '';
+    limitPriceInput.value = currentLimitPrice ? `$${currentLimitPrice.toFixed(2)}` : '';
+    updateLimitTotal();
+
+    marketView.classList.add('hidden');
+    limitView.classList.add('visible');
+    limitNote.classList.add('visible');
+
+    if (isOrchestrated) {
+      expirySection.classList.add('visible');
+      updateFundingCardsMode();
+    }
+
+    updateButtonText();
+    updateWarningDisplay();
+  }
+
+  function switchToMarketMode() {
+    currentMode = 'market';
+
+    limitBtn.classList.remove('active', 'limit-active');
+    marketBtn.classList.add('active');
+
+    marketView.classList.remove('hidden');
+    limitView.classList.remove('visible');
+    limitNote.classList.remove('visible');
+    expirySection.classList.remove('visible');
+
+    if (isOrchestrated) {
+      updateFundingCardsMode();
+    }
+
+    updateButtonText();
+    updateWarningDisplay();
+
+    if (isOrchestrated) {
+      updateOrchestrationTotals();
+    }
+  }
+
+  marketBtn.addEventListener('click', () => {
+    if (currentMode !== 'market') switchToMarketMode();
+  });
+
+  limitBtn.addEventListener('click', () => {
+    if (currentMode !== 'limit') switchToLimitMode();
+  });
+
+  warningCta.addEventListener('click', () => {
+    switchToLimitMode();
+  });
+
+  function updateLimitTotal() {
+    const shares = parseNumber(sharesInput.value);
+    const price = parseNumber(limitPriceInput.value);
+    const total = shares * price;
+    currentShares = shares;
+    currentLimitPrice = price;
+    currentAmount = total;
+    totalValue.textContent = `$${formatNumber(total)}`;
+
+    document.getElementById('goalAmount').textContent = `$${formatNumber(total)}`;
+
+    updateButtonState();
+
+    if (isOrchestrated) {
+      updateOrchestrationTotals();
+    }
+  }
+
+  function updateButtonText() {
+    if (isOrchestrated) {
+      buyBtn.textContent = 'Review Orchestrated Trade';
+      buyBtn.classList.add('orchestrated');
+    } else {
+      if (currentMode === 'market') {
+        buyBtn.textContent = 'Review Order';
+      } else {
+        buyBtn.textContent = 'Review Limit Order';
+      }
+      buyBtn.classList.remove('orchestrated');
+    }
+  }
+
+  sharesInput.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    updateLimitTotal();
+  });
+
+  limitPriceInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/[^0-9.]/g, '');
+    if (value) {
+      e.target.value = '$' + value;
+    } else {
+      e.target.value = '';
+    }
+    updateLimitTotal();
+  });
+
+  limitPriceInput.addEventListener('focus', () => {
+    if (!limitPriceInput.value) {
+      limitPriceInput.value = '$';
+    }
+  });
+
+  orchestrationToggle.addEventListener('click', () => {
+    isOrchestrated = !isOrchestrated;
+    orchestrationToggle.classList.toggle('active', isOrchestrated);
+    fundingSection.classList.toggle('visible', isOrchestrated);
+    balanceRow.classList.toggle('hidden', isOrchestrated);
+
+    if (isOrchestrated) {
+      if (currentMode === 'limit') {
+        expirySection.classList.add('visible');
+      }
+      updateButtonText();
+      updateOrchestrationTotals();
+    } else {
+      expirySection.classList.remove('visible');
+      updateButtonText();
+    }
+
+    updateWarningDisplay();
+  });
+
+  expiryOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      expiryOptions.forEach(o => o.classList.remove('selected'));
+      option.classList.add('selected');
+      selectedExpiry = parseInt(option.dataset.hours);
+      updateConditionSentence();
+    });
+  });
+
+  addSourceBtn.addEventListener('click', () => {
+    document.querySelectorAll('.source-option').forEach(opt => {
+      const source = opt.dataset.source;
+      opt.classList.toggle('disabled', fundingSources.includes(source));
+    });
+    sourceModal.classList.add('visible');
+  });
+
+  sourceModal.addEventListener('click', (e) => {
+    if (e.target === sourceModal) {
+      sourceModal.classList.remove('visible');
+    }
+  });
+
+  document.querySelectorAll('.source-option').forEach(option => {
+    option.addEventListener('click', () => {
+      if (option.classList.contains('disabled')) return;
+
+      const source = option.dataset.source;
+
+      if (source === 'CASH') {
+        addCashCard();
+      } else {
+        const price = option.dataset.price;
+        const shares = option.dataset.shares;
+        const name = option.dataset.name;
+        addFundingCard(source, name, price, shares);
+      }
+
+      fundingSources.push(source);
+      sourceModal.classList.remove('visible');
+      updateOrchestrationTotals();
+      updateWarningDisplay();
+    });
+  });
+
+  function addCashCard() {
+    const card = document.createElement('div');
+    card.className = 'funding-card cash-card';
+    card.dataset.source = 'CASH';
+
+    card.innerHTML = `
+      <div class="funding-card-header">
+        <div class="cash-logo">💵</div>
+        <div class="funding-stock-info">
+          <div class="funding-stock-name">Cash</div>
+          <div class="funding-stock-holding">Available: $${formatNumber(CASH_AVAILABLE)}</div>
+        </div>
+        <button class="remove-funding" data-source="CASH">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="cash-input-row">
+        <span>Use up to</span>
+        <input type="text" class="cash-input" id="cashAmountInput" value="" placeholder="$0">
+      </div>
+    `;
+
+    fundingCards.appendChild(card);
+    document.getElementById('cashSummaryRow').classList.remove('hidden');
+
+    card.querySelector('.remove-funding').addEventListener('click', () => {
+      removeFundingSource('CASH');
+    });
+
+    card.querySelector('.cash-input').addEventListener('input', (e) => {
+      let value = e.target.value.replace(/[^0-9.]/g, '');
+      e.target.value = value ? '$' + value : '';
+      updateOrchestrationTotals();
+    });
+  }
+
+  function addFundingCard(stock, name, price, totalShares) {
+    const card = document.createElement('div');
+    card.className = 'funding-card';
+    card.dataset.source = stock;
+
+    const suggestedShares = Math.min(10, parseInt(totalShares));
+    const isMarketMode = currentMode === 'market';
+
+    card.innerHTML = `
+      <div class="funding-card-header">
+        <div class="stock-logo small">${stock}</div>
+        <div class="funding-stock-info">
+          <div class="funding-stock-name">${name}</div>
+          <div class="funding-stock-holding">You own ${totalShares} shares · $${price}</div>
+        </div>
+        <button class="remove-funding" data-source="${stock}">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="funding-market-inputs" style="display: ${isMarketMode ? 'flex' : 'none'}">
+        <div class="funding-input-group">
+          <label>Shares to sell</label>
+          <input type="text" class="shares-sell-input" data-stock="${stock}" data-price="${price}" value="${suggestedShares}" placeholder="0">
+        </div>
+        <div class="funding-market-value">
+          <div class="label">Value</div>
+          <div class="value market-value" data-stock="${stock}">$${formatNumber(suggestedShares * parseFloat(price))}</div>
+        </div>
+      </div>
+      <div class="funding-limit-inputs" style="display: ${isMarketMode ? 'none' : 'flex'}">
+        <div class="funding-input-group">
+          <label>Shares to sell</label>
+          <input type="text" class="shares-sell-input-limit" data-stock="${stock}" data-price="${price}" value="${suggestedShares}" placeholder="0">
+        </div>
+        <div class="funding-input-group">
+          <label>Limit Price</label>
+          <input type="text" class="limit-sell-input" data-stock="${stock}" value="$${parseFloat(price).toFixed(2)}" placeholder="$0.00">
+        </div>
+      </div>
+      <div class="funding-potential" style="display: ${isMarketMode ? 'none' : 'flex'}">
+        <span class="funding-potential-label">Potential funding</span>
+        <span class="funding-potential-value" data-stock="${stock}">$${formatNumber(suggestedShares * parseFloat(price))}</span>
+      </div>
+    `;
+
+    fundingCards.appendChild(card);
+    document.getElementById(`${stock.toLowerCase()}SummaryRow`).classList.remove('hidden');
+
+    card.querySelector('.remove-funding').addEventListener('click', () => {
+      removeFundingSource(stock);
+    });
+
+    card.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', () => {
+        const isMarketInput = input.classList.contains('shares-sell-input');
+        const isLimitSharesInput = input.classList.contains('shares-sell-input-limit');
+
+        if (isMarketInput) {
+          const limitInput = card.querySelector('.shares-sell-input-limit');
+          if (limitInput) limitInput.value = input.value;
+        } else if (isLimitSharesInput) {
+          const marketInput = card.querySelector('.shares-sell-input');
+          if (marketInput) marketInput.value = input.value;
+        }
+
+        updateOrchestrationTotals();
+        updateWarningDisplay();
+      });
+    });
+  }
+
+  function updateFundingCardsMode() {
+    const isMarketMode = currentMode === 'market';
+
+    fundingCards.querySelectorAll('.funding-card:not(.cash-card)').forEach(card => {
+      const marketInputs = card.querySelector('.funding-market-inputs');
+      const limitInputs = card.querySelector('.funding-limit-inputs');
+      const potential = card.querySelector('.funding-potential');
+
+      if (marketInputs) marketInputs.style.display = isMarketMode ? 'flex' : 'none';
+      if (limitInputs) limitInputs.style.display = isMarketMode ? 'none' : 'flex';
+      if (potential) potential.style.display = isMarketMode ? 'none' : 'flex';
+    });
+  }
+
+  function removeFundingSource(source) {
+    const card = fundingCards.querySelector(`[data-source="${source}"]`);
+    if (card) {
+      card.remove();
+      fundingSources = fundingSources.filter(s => s !== source);
+
+      if (source === 'CASH') {
+        document.getElementById('cashSummaryRow').classList.add('hidden');
+      } else {
+        document.getElementById(`${source.toLowerCase()}SummaryRow`).classList.add('hidden');
+      }
+
+      updateOrchestrationTotals();
+      updateWarningDisplay();
+    }
+  }
+
+  function updateOrchestrationTotals() {
+    let totalFunding = 0;
+    let conditionParts = [];
+    const isMarketMode = currentMode === 'market';
+
+    if (fundingSources.includes('CASH')) {
+      const cashInput = document.getElementById('cashAmountInput');
+      if (cashInput) {
+        const cashAmount = parseNumber(cashInput.value);
+        totalFunding += cashAmount;
+        document.getElementById('cashTotal').textContent = `$${formatNumber(cashAmount)}`;
+      }
+    }
+
+    fundingSources.filter(s => s !== 'CASH').forEach(stock => {
+      let shares, limit, potential;
+
+      if (isMarketMode) {
+        const sharesInput = document.querySelector(`.shares-sell-input[data-stock="${stock}"]`);
+        const marketValueEl = document.querySelector(`.market-value[data-stock="${stock}"]`);
+
+        if (sharesInput) {
+          shares = parseNumber(sharesInput.value);
+          limit = stockData[stock].price;
+          potential = shares * limit;
+
+          if (marketValueEl) {
+            marketValueEl.textContent = `$${formatNumber(potential)}`;
+          }
+        }
+      } else {
+        const sharesInput = document.querySelector(`.shares-sell-input-limit[data-stock="${stock}"]`);
+        const limitInput = document.querySelector(`.limit-sell-input[data-stock="${stock}"]`);
+        const potentialEl = document.querySelector(`.funding-potential-value[data-stock="${stock}"]`);
+
+        if (sharesInput && limitInput) {
+          shares = parseNumber(sharesInput.value);
+          limit = parseNumber(limitInput.value);
+          potential = shares * limit;
+
+          if (potentialEl) {
+            potentialEl.textContent = `$${formatNumber(potential)}`;
+          }
+        }
+      }
+
+      if (shares && limit) {
+        totalFunding += potential;
+        document.getElementById(`${stock.toLowerCase()}Total`).textContent = `$${formatNumber(potential)}`;
+        conditionParts.push({ stock, shares, limit, isMarket: isMarketMode });
+      }
+    });
+
+    document.getElementById('totalFunding').textContent = `$${formatNumber(totalFunding)}`;
+
+    const goalAmount = currentAmount;
+    document.getElementById('goalAmount').textContent = `$${formatNumber(goalAmount)}`;
+
+    const buffer = totalFunding - goalAmount;
+    const bufferRow = document.getElementById('bufferRow');
+    const bufferValue = document.getElementById('bufferValue');
+
+    if (buffer >= 0) {
+      bufferRow.classList.remove('short');
+      bufferValue.textContent = `+$${formatNumber(buffer)}`;
+    } else {
+      bufferRow.classList.add('short');
+      bufferValue.textContent = `-$${formatNumber(Math.abs(buffer))}`;
+    }
+
+    updateButtonState();
+    updateConditionSentence(conditionParts);
+  }
+
+  function updateConditionSentence(parts) {
+    if (fundingSources.length === 0) {
+      document.getElementById('conditionSentence').innerHTML = `
+        Add funding sources above to see the execution plan.
+      `;
+      return;
+    }
+
+    const isMarketMode = currentMode === 'market';
+    const hasCash = fundingSources.includes('CASH');
+    const cashInput = document.getElementById('cashAmountInput');
+    const cashAmount = cashInput ? parseNumber(cashInput.value) : 0;
+
+    if (!parts) parts = [];
+
+    if (isMarketMode) {
+      let actions = [];
+      if (parts.length > 0) {
+        actions.push(parts.map(p => `<span class="sell">sell ${p.shares} ${p.stock}</span>`).join(' and '));
+      }
+      if (hasCash && cashAmount > 0) {
+        actions.push(`use <strong>$${formatNumber(cashAmount)}</strong> cash`);
+      }
+
+      if (actions.length === 0) {
+        document.getElementById('conditionSentence').innerHTML = `
+          Configure your funding sources above.
+        `;
+        return;
+      }
+
+      document.getElementById('conditionSentence').innerHTML = `
+        When you confirm, we'll ${actions.join(' and ')} to <span class="buy">buy ${currentShares} AAPL</span> at current market prices. Executes immediately.
+      `;
+    } else {
+      if (parts.length === 0 && (!hasCash || cashAmount === 0)) {
+        document.getElementById('conditionSentence').innerHTML = `
+          Configure your funding sources above.
+        `;
+        return;
+      }
+
+      let conditions = parts.map(p => `<strong>${p.stock}</strong> reaches <strong>$${p.limit.toFixed(2)}</strong>`).join(' and ');
+      let actions = [];
+      if (parts.length > 0) {
+        actions.push(parts.map(p => `<span class="sell">sell ${p.shares} ${p.stock}</span>`).join(' and '));
+      }
+      if (hasCash && cashAmount > 0) {
+        actions.push(`use <strong>$${formatNumber(cashAmount)}</strong> cash`);
+      }
+
+      const expiryText = selectedExpiry === 1 ? '1 hour' : `${selectedExpiry} hours`;
+
+      let conditionText = conditions ? `When ${conditions} and ` : 'When ';
+      conditionText += `<strong>AAPL</strong> is at or below <strong>$${currentLimitPrice.toFixed(2)}</strong>`;
+
+      document.getElementById('conditionSentence').innerHTML = `
+        ${conditionText}, we'll ${actions.join(' and ')} to <span class="buy">buy ${currentShares} AAPL</span>.
+        Expires in <strong>${expiryText}</strong> if conditions aren't met.
+      `;
+    }
+  }
+
+  resetBtn.addEventListener('click', () => {
+    currentMode = 'market';
+    isOrchestrated = false;
+    currentAmount = 0;
+    currentShares = 0;
+    currentLimitPrice = STOCK_PRICE;
+    fundingSources = [];
+    offendingItems = [];
+    selectedExpiry = 1;
+
+    amountInput.value = '';
+    sharesInput.value = '';
+    limitPriceInput.value = '';
+    shareEstimate.textContent = '0 shares';
+    totalValue.textContent = '$0.00';
+
+    marketView.classList.remove('hidden');
+    limitView.classList.remove('visible');
+    limitNote.classList.remove('visible');
+    orchestrationToggle.classList.remove('active');
+    fundingSection.classList.remove('visible');
+    expirySection.classList.remove('visible');
+    stickyWarning.classList.remove('visible');
+    inputCard.classList.remove('warning');
+    balanceRow.classList.remove('hidden');
+
+    marketBtn.classList.add('active');
+    limitBtn.classList.remove('active', 'limit-active');
+
+    buyBtn.textContent = 'Review Order';
+    buyBtn.classList.remove('orchestrated');
+    buyBtn.disabled = true;
+
+    expiryOptions.forEach(o => o.classList.remove('selected'));
+    document.querySelector('[data-hours="1"]').classList.add('selected');
+
+    fundingCards.innerHTML = '';
+
+    ['cash', 'msft', 'tsla', 'googl', 'amzn'].forEach(source => {
+      document.getElementById(`${source}SummaryRow`).classList.add('hidden');
+    });
+
+    updateStateIndicator('default');
+  });
+
+  updateStateIndicator('default');
+</script>
+</PhoneLayout>
