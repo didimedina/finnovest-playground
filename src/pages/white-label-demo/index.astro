@@ -1,0 +1,315 @@
+---
+import ThemedPhoneLayout from '../../layouts/ThemedPhoneLayout.astro';
+---
+
+<ThemedPhoneLayout title="White Label Demo">
+  <div class="screen">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo"></div>
+      <h1 class="title">Theme Demo</h1>
+      <div class="avatar"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Typography Section -->
+      <section class="section">
+        <p class="label">Typography</p>
+        <div class="type-card">
+          <h2 class="heading-xl">Heading XL</h2>
+          <h3 class="heading-lg">Heading Large</h3>
+          <h4 class="heading-md">Heading Medium</h4>
+          <p class="body-text">Body text uses Inter across all themes. Only headings change based on the selected font.</p>
+        </div>
+      </section>
+
+      <!-- Brand Palette Section -->
+      <section class="section">
+        <p class="label">Brand Palette</p>
+        <div class="palette-row">
+          <div class="swatch brand-1"><span>1</span></div>
+          <div class="swatch brand-2"><span>2</span></div>
+          <div class="swatch brand-3"><span>3</span></div>
+          <div class="swatch brand-4"><span>4</span></div>
+          <div class="swatch brand-5"><span>5</span></div>
+          <div class="swatch brand-6"><span>6</span></div>
+          <div class="swatch brand-7"><span>7</span></div>
+          <div class="swatch brand-8"><span>8</span></div>
+        </div>
+        <div class="palette-row">
+          <div class="swatch brand-9"><span>9</span></div>
+          <div class="swatch brand-10"><span>10</span></div>
+          <div class="swatch brand-11"><span>11</span></div>
+          <div class="swatch brand-12"><span>12</span></div>
+          <div class="swatch brand-13"><span>13</span></div>
+          <div class="swatch brand-14"><span>14</span></div>
+          <div class="swatch brand-15"><span>15</span></div>
+          <div class="swatch brand-16"><span>16</span></div>
+        </div>
+      </section>
+
+      <!-- Base Palette Section -->
+      <section class="section">
+        <p class="label">Base Palette</p>
+        <div class="palette-row">
+          <div class="swatch base-1"><span>1</span></div>
+          <div class="swatch base-2"><span>2</span></div>
+          <div class="swatch base-3"><span>3</span></div>
+          <div class="swatch base-4"><span>4</span></div>
+          <div class="swatch base-5"><span>5</span></div>
+          <div class="swatch base-6"><span>6</span></div>
+          <div class="swatch base-7"><span>7</span></div>
+          <div class="swatch base-8"><span>8</span></div>
+        </div>
+        <div class="palette-row">
+          <div class="swatch base-9"><span>9</span></div>
+          <div class="swatch base-10"><span>10</span></div>
+          <div class="swatch base-11"><span>11</span></div>
+          <div class="swatch base-12"><span>12</span></div>
+          <div class="swatch base-13"><span>13</span></div>
+          <div class="swatch base-14"><span>14</span></div>
+          <div class="swatch base-15"><span>15</span></div>
+          <div class="swatch base-16"><span>16</span></div>
+        </div>
+      </section>
+
+      <!-- Sample UI Section -->
+      <section class="section">
+        <p class="label">Sample UI</p>
+        <div class="sample-card">
+          <div class="card-header">
+            <h3 class="card-title">Account Balance</h3>
+            <span class="card-badge">Active</span>
+          </div>
+          <p class="card-amount">$128,450.00</p>
+          <p class="card-subtitle">Main Portfolio</p>
+          <button class="primary-btn">View Details</button>
+          <button class="secondary-btn">Export</button>
+        </div>
+      </section>
+
+      <div style="height: 40px;"></div>
+    </div>
+  </div>
+</ThemedPhoneLayout>
+
+<style>
+  .screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--base-16);
+  }
+
+  .header {
+    padding: 60px 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--base-15);
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-12));
+  }
+
+  .title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--base-1);
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--base-12);
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section {
+    margin-top: 24px;
+  }
+
+  .label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--base-11);
+    margin-bottom: 12px;
+  }
+
+  /* Typography Card */
+  .type-card {
+    background: var(--base-15);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+
+  .heading-xl {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--base-1);
+    margin-bottom: 8px;
+  }
+
+  .heading-lg {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--base-1);
+    margin-bottom: 8px;
+  }
+
+  .heading-md {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--base-1);
+    margin-bottom: 12px;
+  }
+
+  .body-text {
+    font-size: 14px;
+    color: var(--base-8);
+    line-height: 1.5;
+  }
+
+  /* Palette Swatches */
+  .palette-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .swatch {
+    flex: 1;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .swatch span {
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  /* Brand swatches */
+  .swatch.brand-1 { background: var(--brand-1); color: var(--black); }
+  .swatch.brand-2 { background: var(--brand-2); color: var(--black); }
+  .swatch.brand-3 { background: var(--brand-3); color: var(--black); }
+  .swatch.brand-4 { background: var(--brand-4); color: var(--black); }
+  .swatch.brand-5 { background: var(--brand-5); color: var(--black); }
+  .swatch.brand-6 { background: var(--brand-6); color: var(--black); }
+  .swatch.brand-7 { background: var(--brand-7); color: var(--black); }
+  .swatch.brand-8 { background: var(--brand-8); color: var(--black); }
+  .swatch.brand-9 { background: var(--brand-9); color: var(--white); }
+  .swatch.brand-10 { background: var(--brand-10); color: var(--white); }
+  .swatch.brand-11 { background: var(--brand-11); color: var(--white); }
+  .swatch.brand-12 { background: var(--brand-12); color: var(--white); }
+  .swatch.brand-13 { background: var(--brand-13); color: var(--white); }
+  .swatch.brand-14 { background: var(--brand-14); color: var(--white); }
+  .swatch.brand-15 { background: var(--brand-15); color: var(--white); }
+  .swatch.brand-16 { background: var(--brand-16); color: var(--white); }
+
+  /* Base swatches */
+  .swatch.base-1 { background: var(--base-1); color: var(--black); }
+  .swatch.base-2 { background: var(--base-2); color: var(--black); }
+  .swatch.base-3 { background: var(--base-3); color: var(--black); }
+  .swatch.base-4 { background: var(--base-4); color: var(--black); }
+  .swatch.base-5 { background: var(--base-5); color: var(--black); }
+  .swatch.base-6 { background: var(--base-6); color: var(--black); }
+  .swatch.base-7 { background: var(--base-7); color: var(--black); }
+  .swatch.base-8 { background: var(--base-8); color: var(--black); }
+  .swatch.base-9 { background: var(--base-9); color: var(--white); }
+  .swatch.base-10 { background: var(--base-10); color: var(--white); }
+  .swatch.base-11 { background: var(--base-11); color: var(--white); }
+  .swatch.base-12 { background: var(--base-12); color: var(--white); }
+  .swatch.base-13 { background: var(--base-13); color: var(--white); }
+  .swatch.base-14 { background: var(--base-14); color: var(--white); }
+  .swatch.base-15 { background: var(--base-15); color: var(--white); }
+  .swatch.base-16 { background: var(--base-16); color: var(--white); }
+
+  /* Sample Card */
+  .sample-card {
+    background: var(--base-15);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--base-1);
+  }
+
+  .card-badge {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brand-11);
+    background: var(--brand-14);
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+
+  .card-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--base-1);
+    font-family: var(--font-heading);
+    margin-bottom: 4px;
+  }
+
+  .card-subtitle {
+    font-size: 14px;
+    color: var(--base-8);
+    margin-bottom: 20px;
+  }
+
+  .primary-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--brand-11);
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .secondary-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--base-14);
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--base-1);
+    cursor: pointer;
+  }
+</style>
