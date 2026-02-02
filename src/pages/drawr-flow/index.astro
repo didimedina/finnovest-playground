@@ -297,7 +297,7 @@ import Config from '../../layouts/Config.astro';
   .hub {
     position: absolute;
     inset: 0;
-    background: var(--base-12);
+    background: #000;
     display: flex;
     flex-direction: column;
     padding-top: 60px;
@@ -445,7 +445,7 @@ import Config from '../../layouts/Config.astro';
     display: flex;
     justify-content: space-around;
     padding: 16px 20px 32px;
-    background: var(--base-12);
+    background: #000;
     flex-shrink: 0;
   }
 
@@ -479,16 +479,10 @@ import Config from '../../layouts/Config.astro';
      SKELETON STYLES
      ═══════════════════════════════════════════════════════════════════════════ */
 
-  @keyframes pulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
-  }
-
   .skeleton-line {
     height: 12px;
     background: var(--base-9);
     border-radius: 6px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-line.w-30 { width: 30%; }
@@ -525,7 +519,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-9);
     border-radius: 50%;
     flex-shrink: 0;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-text {
@@ -540,7 +533,6 @@ import Config from '../../layouts/Config.astro';
     height: 16px;
     background: var(--base-9);
     border-radius: 8px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   /* Skeleton grid (holdings) */
@@ -564,7 +556,6 @@ import Config from '../../layouts/Config.astro';
     height: 36px;
     background: var(--base-9);
     border-radius: 10px;
-    animation: pulse 1.5s ease-in-out infinite;
     margin-bottom: 4px;
   }
 
@@ -615,7 +606,6 @@ import Config from '../../layouts/Config.astro';
     height: 44px;
     background: var(--base-10);
     border-radius: 22px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-send {
@@ -623,7 +613,6 @@ import Config from '../../layouts/Config.astro';
     height: 44px;
     background: var(--brand-8);
     border-radius: 50%;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   /* Skeleton search */
@@ -632,7 +621,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-10);
     border-radius: 22px;
     margin-bottom: 20px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   /* Curtain skeletons */
@@ -651,7 +639,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-9);
     border-radius: 18px;
     margin: 0 auto 8px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-change {
@@ -660,7 +647,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-9);
     border-radius: 10px;
     margin: 0 auto;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-section-label {
@@ -669,7 +655,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-9);
     border-radius: 7px;
     margin-bottom: 16px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .mt-24 {
@@ -714,7 +699,6 @@ import Config from '../../layouts/Config.astro';
     height: 22px;
     background: var(--base-9);
     border-radius: 11px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-ticker-row {
@@ -728,7 +712,6 @@ import Config from '../../layouts/Config.astro';
     height: 40px;
     background: var(--base-9);
     border-radius: 12px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-ticker-info {
@@ -743,7 +726,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-9);
     border-radius: 22px;
     margin-top: 4px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   /* Chart skeleton */
@@ -751,7 +733,6 @@ import Config from '../../layouts/Config.astro';
     height: 160px;
     background: var(--base-10);
     border-radius: var(--radius-lg);
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   /* Allocation skeleton */
@@ -766,7 +747,6 @@ import Config from '../../layouts/Config.astro';
     background: var(--base-9);
     border-radius: 6px;
     margin-bottom: 16px;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 
   .skeleton-allocation-legend {
@@ -786,7 +766,6 @@ import Config from '../../layouts/Config.astro';
     height: 12px;
     background: var(--base-9);
     border-radius: 50%;
-    animation: pulse 1.5s ease-in-out infinite;
   }
 </style>
 
