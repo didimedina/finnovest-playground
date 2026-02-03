@@ -1,17 +1,15 @@
-// src/utils/tailwindAnchors.ts
-
-type Anchor = {
+type PaletteAnchors = {
   light: string;
   mid: string;
   dark: string;
 };
 
-type ContrastAnchors = {
-  hard: Anchor;
-  soft: Anchor;
+type ContrastModes = {
+  hard: PaletteAnchors;
+  soft: PaletteAnchors;
 };
 
-export const accentAnchors: Record<string, ContrastAnchors> = {
+export const accentAnchors: Record<string, ContrastModes> = {
   red: {
     hard: {
       light: "oklch(0.971 0.013 17.38)",
@@ -218,7 +216,7 @@ export const accentAnchors: Record<string, ContrastAnchors> = {
   },
 };
 
-export const neutralAnchors: Record<string, ContrastAnchors> = {
+export const baseAnchors: Record<string, ContrastModes> = {
   slate: {
     hard: {
       light: "oklch(0.984 0.003 247.858)",
@@ -282,5 +280,5 @@ export const neutralAnchors: Record<string, ContrastAnchors> = {
 };
 
 export type AccentColor = keyof typeof accentAnchors;
-export type NeutralColor = keyof typeof neutralAnchors;
+export type BaseColor = keyof typeof baseAnchors;
 export type Contrast = "hard" | "soft";
